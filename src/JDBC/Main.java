@@ -9,7 +9,7 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         CrudOperation crudOperation = new CrudOperation();
 
-        while(true) {
+        do {
             System.out.println("1. Fetch student using id.");
             System.out.println("2. Fetch all students.");
             System.out.println("3. Insert an entry in student table.");
@@ -24,7 +24,7 @@ public class Main {
                     int id = sc.nextInt();
                     Student student = crudOperation.getStudentById(id);
 
-                    if(student == null) {
+                    if (student == null) {
                         System.out.println("No student exist with id " + id);
                     } else {
                         System.out.println(student);
@@ -35,7 +35,7 @@ public class Main {
 
                     List<Student> studentList = crudOperation.getStudentList();
 
-                    if(studentList == null || studentList.isEmpty()) {
+                    if (studentList == null || studentList.isEmpty()) {
                         System.out.println("Student table is empty!");
                     } else {
                         System.out.println(studentList);
@@ -58,7 +58,7 @@ public class Main {
 
                     boolean added = crudOperation.addNewStudent(newStudent);
 
-                    if(added) {
+                    if (added) {
                         System.out.println("New student added successfully!");
                     } else {
                         System.out.println("Failed to add new student!");
@@ -67,6 +67,18 @@ public class Main {
                     break;
 
                 case 4:
+
+                    System.out.print("Enter the id to be deleted: ");
+                    int deleteId = sc.nextInt();
+
+                    boolean deleted = crudOperation.deleteStudentById(deleteId);
+
+                    if(deleted) {
+                        System.out.println("Student entry deleted successfully!");
+                    } else {
+                        System.out.println("Failed to delete student entry!");
+                    }
+
                     break;
 
             }
@@ -75,7 +87,8 @@ public class Main {
             if(sc.next().toUpperCase().equals("N")) {
                 break;
             }
-        }
+
+        } while (true);
 
 
 
