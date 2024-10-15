@@ -99,6 +99,31 @@ public class CrudOperation {
     }
 
 
+    public boolean deleteStudentById(int id) {
+        Connection connection = JdbcConfig.getConnectionObject();
+        if(connection == null) {
+            System.out.println("Failed to establish database connection!");
+        }
+
+        String query = "DELETE FROM student WHERE id=?;";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+
+            preparedStatement.setInt(1, id);
+
+            int affectedRows = preparedStatement.executeUpdate();
+
+            return affectedRows > 0;
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return false;
+    }
+
+
 
 
 }
