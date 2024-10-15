@@ -10,7 +10,7 @@ public class CrudOperation {
         Connection conn = JdbcConfig.getConnectionObject();
 
         if(conn == null) {
-            System.out.println("Failed to establish database connection.");
+            System.out.println("Failed to establish database connection!");
             return null;
         }
 
@@ -43,7 +43,7 @@ public class CrudOperation {
         List<Student> studentList = new ArrayList<>();
 
         if(connection == null) {
-            System.out.println("Failed to establish connection with database!");
+            System.out.println("Failed to establish database connection!");
             return studentList;
         }
 
@@ -68,6 +68,31 @@ public class CrudOperation {
             System.out.println(e.getMessage());
         }
         return studentList;
+    }
+
+
+    public boolean addNewStudent(Student student) {
+        Connection connection = JdbcConfig.getConnectionObject();
+        if(connection == null) {
+            System.out.println("Failed to establish database connection!");
+        }
+
+        String query = "INSERT INTO student(name, age, marks) VALUES(?, ?, ?);";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+
+            preparedStatement.setString(1, student.getName());
+            preparedStatement.setInt(2, student.getAge());
+            preparedStatement.setDouble(3, student.getMarks());
+
+            int affectedRows = preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return false;
     }
 
 
