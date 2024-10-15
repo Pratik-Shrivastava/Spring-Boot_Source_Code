@@ -1,5 +1,6 @@
 package JDBC;
 
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -7,6 +8,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
+        Connection connection = JdbcConfig.getConnectionObject();
         Scanner sc = new Scanner(System.in);
         CrudOperation crudOperation = new CrudOperation();
         BatchOperation batchOperation = new BatchOperation();
@@ -22,13 +24,21 @@ public class Main {
             int choice = sc.nextInt();
             switch (choice) {
                 case 1:
+                    System.out.print("Enter the student id: ");
+                    int id = sc.nextInt();
+                    Student student1 = crudOperation.getStudentById(connection, id);
 
+                    if(student1 == null) {
+                        System.out.println("Student does not exist with this id!");
+                    } else {
+                        System.out.println(student1);
+                    }
 
                     break;
 
                 case 2:
 
-                    List<Student> studentList = crudOperation.getStudentList();
+                    List<Student> studentList = crudOperation.getStudentList(connection);
 
                     if (studentList == null || studentList.isEmpty()) {
                         System.out.println("Student table is empty!");
@@ -51,7 +61,7 @@ public class Main {
                     System.out.print("Enter the marks of the student: ");
                     newStudent.setMarks(sc.nextDouble());
 
-                    boolean added = crudOperation.addNewStudent(newStudent);
+                    boolean added = crudOperation.addNewStudent(connection, newStudent);
 
                     if (added) {
                         System.out.println("New student added successfully!");
@@ -66,7 +76,7 @@ public class Main {
                     System.out.print("Enter the id to be deleted: ");
                     int deleteId = sc.nextInt();
 
-                    boolean deleted = crudOperation.deleteStudentById(deleteId);
+                    boolean deleted = crudOperation.deleteStudentById(connection, deleteId);
 
                     if(deleted) {
                         System.out.println("Student entry deleted successfully!");
@@ -97,9 +107,8 @@ public class Main {
                             break;
                         }
                     } while (true);
-                    batchOperation.addStudentList(studentList1);
+                    batchOperation.addStudentList(connection, studentList1);
                     break;
-
                 default:
                     System.out.print("Please entry a valid choice!");
                     continue;

@@ -7,8 +7,11 @@ import java.util.List;
 
 public class BatchOperation {
 
-    public void addStudentList(List<Student> studentList) {
-        Connection connection = JdbcConfig.getConnectionObject();
+    public void addStudentList(
+            Connection connection,
+            List<Student> studentList
+    ) {
+
         if(connection == null) {
             System.out.println("Failed to establish database connection!");
             return;

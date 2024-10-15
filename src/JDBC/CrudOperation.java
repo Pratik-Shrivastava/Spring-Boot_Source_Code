@@ -6,10 +6,9 @@ import java.util.List;
 
 public class CrudOperation {
 
-    public Student getStudentById(int id) {
-        Connection conn = JdbcConfig.getConnectionObject();
+    public Student getStudentById(Connection connection, int id) {
 
-        if(conn == null) {
+        if(connection == null) {
             System.out.println("Failed to establish database connection!");
             return null;
         }
@@ -17,7 +16,7 @@ public class CrudOperation {
         String query = "SELECT * FROM student WHERE id=?";
 
         try {
-            PreparedStatement preparedStatement = conn.prepareStatement(query);
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, id);
             ResultSet rs = preparedStatement.executeQuery();
 
@@ -38,8 +37,7 @@ public class CrudOperation {
     }
 
 
-    public List<Student> getStudentList() {
-        Connection connection = JdbcConfig.getConnectionObject();
+    public List<Student> getStudentList(Connection connection) {
         List<Student> studentList = new ArrayList<>();
 
         if(connection == null) {
@@ -71,8 +69,7 @@ public class CrudOperation {
     }
 
 
-    public boolean addNewStudent(Student student) {
-        Connection connection = JdbcConfig.getConnectionObject();
+    public boolean addNewStudent(Connection connection, Student student) {
         if(connection == null) {
             System.out.println("Failed to establish database connection!");
         }
@@ -99,8 +96,7 @@ public class CrudOperation {
     }
 
 
-    public boolean deleteStudentById(int id) {
-        Connection connection = JdbcConfig.getConnectionObject();
+    public boolean deleteStudentById(Connection connection, int id) {
         if(connection == null) {
             System.out.println("Failed to establish database connection!");
         }
