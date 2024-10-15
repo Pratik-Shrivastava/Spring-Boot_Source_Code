@@ -6,6 +6,13 @@ public class Student {
     private int age;
     private double marks;
 
+    public Student() {
+        this.id = 0;
+        this.name = "";
+        this.age = 0;
+        this.marks = 0.0;
+    }
+
 
     public int getId() {
         return id;
