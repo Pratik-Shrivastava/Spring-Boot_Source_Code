@@ -88,6 +88,9 @@ public class CrudOperation {
 
             int affectedRows = preparedStatement.executeUpdate();
 
+            return affectedRows > 0;
+
+
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
