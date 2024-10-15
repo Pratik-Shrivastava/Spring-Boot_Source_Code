@@ -21,12 +21,16 @@ public class CrudOperation {
             PreparedStatement preparedStatement = conn.prepareStatement(query);
             preparedStatement.setInt(1, id);
             ResultSet rs = preparedStatement.executeQuery();
-            return new Student(
-                    rs.getInt(1),
-                    rs.getString(2),
-                    rs.getInt(3),
-                    rs.getDouble(4)
-            );
+
+            if(rs.next()) {
+                return new Student(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getInt(3),
+                        rs.getDouble(4)
+                );
+            }
+
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
