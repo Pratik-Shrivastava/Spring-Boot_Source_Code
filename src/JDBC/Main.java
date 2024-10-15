@@ -1,6 +1,7 @@
 package JDBC;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -12,6 +13,7 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         CrudOperation crudOperation = new CrudOperation();
         BatchOperation batchOperation = new BatchOperation();
+        Transaction transaction = new Transaction();
 
         do {
             System.out.println("1. Fetch student using id.");
@@ -19,6 +21,7 @@ public class Main {
             System.out.println("3. Insert an entry in student table.");
             System.out.println("4. Delete an entry in student table.");
             System.out.println("5. Add student list in student table.");
+            System.out.println("6. Transfer money.");
             System.out.print("Enter your choice: ");
 
             int choice = sc.nextInt();
@@ -109,6 +112,35 @@ public class Main {
                     } while (true);
                     batchOperation.addStudentList(connection, studentList1);
                     break;
+
+                case 6:
+                    System.out.print("Enter account number of debitor: ");
+                    long debitAccount = sc.nextLong();
+
+                    System.out.print("Enter account number of creditor: ");
+                    long creditAccount = sc.nextLong();
+
+                    System.out.print("Enter the amount: ");
+                    double amount = sc.nextDouble();
+                    try {
+                        boolean transfered = transaction.transferMoney(
+                                creditAccount,
+                                debitAccount,
+                                amount
+                        );
+
+                        if(transfered) {
+                            System.out.println("Transaction processed successfully!");
+                        } else {
+                            System.out.println("Transaction failed!");
+                        }
+
+                    } catch (SQLException e) {
+                        System.out.println(e.getMessage());
+                    }
+                    
+                    break;
+
                 default:
                     System.out.print("Please entry a valid choice!");
                     continue;
