@@ -1,5 +1,6 @@
 package JDBC;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -8,27 +9,21 @@ public class Main {
 
         Scanner sc = new Scanner(System.in);
         CrudOperation crudOperation = new CrudOperation();
+        BatchOperation batchOperation = new BatchOperation();
 
         do {
             System.out.println("1. Fetch student using id.");
             System.out.println("2. Fetch all students.");
             System.out.println("3. Insert an entry in student table.");
             System.out.println("4. Delete an entry in student table.");
+            System.out.println("5. Add student list in student table.");
             System.out.print("Enter your choice: ");
 
             int choice = sc.nextInt();
             switch (choice) {
                 case 1:
 
-                    System.out.print("Enter the id: ");
-                    int id = sc.nextInt();
-                    Student student = crudOperation.getStudentById(id);
 
-                    if (student == null) {
-                        System.out.println("No student exist with id " + id);
-                    } else {
-                        System.out.println(student);
-                    }
                     break;
 
                 case 2:
@@ -81,6 +76,34 @@ public class Main {
 
                     break;
 
+                case 5:
+                    List<Student> studentList1 = new ArrayList<>();
+                    do {
+                        Student student = new Student();
+
+                        System.out.print("Enter the name of the student: ");
+                        student.setName(sc.next());
+
+                        System.out.print("Enter the age of the student: ");
+                        student.setAge(sc.nextInt());
+
+                        System.out.print("Enter the marks of the student: ");
+                        student.setMarks(sc.nextDouble());
+
+                        studentList1.add(student);
+
+                        System.out.print("Add more data (Y/N): ");
+                        if(sc.next().toUpperCase().equals("N")) {
+                            break;
+                        }
+                    } while (true);
+                    batchOperation.addStudentList(studentList1);
+                    break;
+
+                default:
+                    System.out.print("Please entry a valid choice!");
+                    continue;
+
             }
 
             System.out.print("Do you want to continue? (Y / N): ");
@@ -93,4 +116,5 @@ public class Main {
 
 
     }
+
 }
